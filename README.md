@@ -2,6 +2,8 @@
 
 A General Purpose Calculator and Programming Frontend with a variety of export options.
 
+![A Recent Screenshot](http://zakfenton.com/user/pages/07.projects/sdk/Screenshot%20from%202016-11-20%2019-59-16.png)
+
 ## About This Repository
 
 This repository is the GitHub home for the public release of the MettaScript Editor.
