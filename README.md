@@ -6,7 +6,7 @@ A General Purpose Calculator and Programming Frontend with a variety of export o
 
 ## About This Repository
 
-This repository is the GitHub home for the public release of the MettaScript Editor.
+This repository is the GitHub/GitLab home for the public **ALPHA QUALITY** release of the MettaScript Editor, which is currently under heavy development along with related specifications (in particular, the Metta Bytecode Specification) and backend technologies (in particular, ZVM and HAL).
 
 Development of the MettaScript Editor mostly happens in a private Fossil repository, so the version uploaded here may not be the most up-to-date or well-documented.
 
