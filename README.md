@@ -2,6 +2,18 @@
 
 A General Purpose Calculator and Programming Frontend with a variety of export options.
 
+## About This Repository
+
+This repository is the GitHub home for the public release of the MettaScript Editor.
+
+Development of the MettaScript Editor mostly happens in a private Fossil repository, so the version uploaded here may not be the most up-to-date or well-documented.
+
+## Binaries & News
+
+The most up-to-date source of binary builds and news relating to MettaScript and the MettaScript Editor is my website's SDK section:
+
+http://zakfenton.com/projects/sdk
+
 ## Primer
 
 MettaScript is half way between a computer algebra system and a programming language. It will be most useful to users who are already familiar with Scheme/LISP and Smalltalk (it's similar to those, but with a more traditional syntax based on plain old mathematics, and with looser semantic rules allowing for more intuitive operation).
@@ -44,8 +56,4 @@ Examples:
 
 (The result is `7`.)
 
-## About This Repository
-
-This repository is the GitHub home for the public release of the MettaScript Editor.
-
-Development of the MettaScript Editor mostly happens in a private Fossil repository, so the version uploaded here may not be the most up-to-date or well-documented.
+More examples can be found in the editor itself.
