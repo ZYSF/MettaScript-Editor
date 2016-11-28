@@ -5,6 +5,9 @@ package org.mettascript.editor.swing;
 
 import org.mettascript.editor.*;
 
+import org.mettascript.parser.FormulaParser;
+import org.mettascript.bytecode.BytecodeFile;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -12,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -112,6 +116,22 @@ public class MainWindow extends JFrame {
 			doSave();
 		} else {
 			System.out.println("Save As operation terminated by user.");
+		}
+	}
+	
+	void doQuickBuild() {
+		if (getDocument() == null || getDocument().getFile() == null) {
+			JOptionPane.showMessageDialog(null, "You need to save your formula somewhere before you can use Quick Build.", "Not Saved!", JOptionPane.ERROR_MESSAGE);
+			doSaveAs();
+		}
+		try {
+			FormulaParser parser = getDocument().getParser();
+			BytecodeFile bytecode = new BytecodeFile(parser);
+			FileOutputStream output = new FileOutputStream(getDocument().getFile().getPath().replaceFirst("[.][^.]+$", ".mbc"));
+			bytecode.encode(output);
+			output.close();
+		} catch (Throwable t) {
+			JOptionPane.showMessageDialog(null, t.toString(), "Internal Error During Build!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

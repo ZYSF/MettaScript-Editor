@@ -80,6 +80,16 @@ public class MenuBar extends JMenuBar {
 
         });
         formula.add(formulaSaveAs);
+        JMenuItem formulaQuickBuild = new JMenuItem("Quick Build (-> .mbc)");
+        formulaQuickBuild.setMnemonic('q');
+        formulaQuickBuild.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.doQuickBuild();
+            }
+
+        });
+        formula.add(formulaQuickBuild);
 
         JMenu edit = new JMenu("_Edit");
 
