@@ -50,9 +50,25 @@ public class IntegerValue extends Value implements Comparable<IntegerValue> {
                     return integer.compareTo(rhs.integer) <= 0 ? YES : NO;
                 case ">=":
                     return integer.compareTo(rhs.integer) >= 0 ? YES : NO;
+                case "asText":
+                {
+					int base = rhs.integer.intValue();
+					switch (base) {
+					case 16:
+						return new TextValue(Long.toHexString(integer.longValue()));
+					default:
+						return new TextValue(integer.toString());
+					}
+				}
             }
         } else if (rightHandSide == NOTHING) {
         	switch (operator) {
+			case "asText":
+				return new TextValue(integer.toString());
+			
+			case "unicodeAsText":
+				return new TextValue(new String(Character.toChars(integer.intValue())));
+			
         	case "negated":
         	case "negate":
         		return new IntegerValue(integer.negate());

@@ -77,6 +77,8 @@ public class TextValue extends Value {
 			}
 		} else {
 			switch (operator) {
+				case "asText":
+					return this;
 				case "isUnicodeCompatible":
 					return Value.YES;
 				case "internalEncoding":
