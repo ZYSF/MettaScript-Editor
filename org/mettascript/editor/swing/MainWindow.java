@@ -91,38 +91,45 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
-	void doSave() {
+	boolean doSave() {
 		if (getDocument().getFile() == null) {
-			doSaveAs();
+			return doSaveAs();
 		} else {
 			try {
 				getDocument().save();
 				getActivePanel().documentChangedSinceSave = false;
 				getActivePanel().updateTitle();
+				
+				return true;
 			} catch (IOException e) {
 				// TODO
 				e.printStackTrace();
+				
+				return false;
 			}
 		}
 	}
 	
-	void doSaveAs() {
+	boolean doSaveAs() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FormulaFileFilter());
 		int result = fileChooser.showSaveDialog(this);// fileChooser.showDialog(this, "Save As");
 		if (result == JFileChooser.APPROVE_OPTION) {
 			getDocument().setFile(fileChooser.getSelectedFile());
 			getActivePanel().updateTitle();
-			doSave();
+			return doSave();
 		} else {
 			System.out.println("Save As operation terminated by user.");
+			return false;
 		}
 	}
 	
-	void doQuickBuild() {
+	boolean doQuickBuild() {
 		if (getDocument() == null || getDocument().getFile() == null) {
 			JOptionPane.showMessageDialog(null, "You need to save your formula somewhere before you can use Quick Build.", "Not Saved!", JOptionPane.ERROR_MESSAGE);
-			doSaveAs();
+			if (!doSaveAs()) {
+				return false;
+			}
 		}
 		try {
 			FormulaParser parser = getDocument().getParser();
@@ -130,8 +137,10 @@ public class MainWindow extends JFrame {
 			FileOutputStream output = new FileOutputStream(getDocument().getFile().getPath().replaceFirst("[.][^.]+$", ".mbc"));
 			bytecode.encode(output);
 			output.close();
+			return true;
 		} catch (Throwable t) {
 			JOptionPane.showMessageDialog(null, t.toString(), "Internal Error During Build!", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 

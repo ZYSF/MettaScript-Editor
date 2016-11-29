@@ -7,6 +7,7 @@ package org.mettascript.editor.swing;
 import org.mettascript.editor.Document;
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -47,17 +48,6 @@ public class MenuBar extends JMenuBar {
             }
         });
         formula.add(formulaOpen);
-        JMenuItem formulaClose = new JMenuItem("Close Window");
-        formulaClose.setMnemonic('c');
-        formulaClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
-        formulaClose.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.close();
-            }
-
-        });
-        formula.add(formulaClose);
         formula.addSeparator();
         JMenuItem formulaSave = new JMenuItem("Save");
         formulaSave.setMnemonic('s');
@@ -80,6 +70,7 @@ public class MenuBar extends JMenuBar {
 
         });
         formula.add(formulaSaveAs);
+        formula.addSeparator();
         JMenuItem formulaQuickBuild = new JMenuItem("Quick Build (-> .mbc)");
         formulaQuickBuild.setMnemonic('q');
         formulaQuickBuild.addActionListener(new ActionListener() {
@@ -90,13 +81,37 @@ public class MenuBar extends JMenuBar {
 
         });
         formula.add(formulaQuickBuild);
+        formula.addSeparator();
+        JMenuItem formulaClose = new JMenuItem("Close Window");
+        formulaClose.setMnemonic('c');
+        formulaClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
+        formulaClose.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.close();
+            }
+
+        });
+        formula.add(formulaClose);
 
         JMenu edit = new JMenu("_Edit");
+        
+        JMenuItem editCut = new JMenuItem(new DefaultEditorKit.CutAction());
+        editCut.setText("Cut");
+        edit.add(editCut);
+        JMenuItem editCopy = new JMenuItem(new DefaultEditorKit.CopyAction());
+        editCopy.setText("Copy");
+        edit.add(editCopy);
+        JMenuItem editPaste = new JMenuItem(new DefaultEditorKit.PasteAction());
+        editPaste.setText("Paste");
+        edit.add(editPaste);
 
+		/*
         JMenu language = new JMenu("Language");
 
         JMenu view = new JMenu("_View");
         view.setMnemonic('v');
+        */
 		/*
 		JMenu viewLookAndFeel = new JMenu("Switch Theme");
 		view.add(viewLookAndFeel);
@@ -144,8 +159,8 @@ public class MenuBar extends JMenuBar {
 
         add(formula);
         add(edit);
-        add(language);
-        add(view);
+        //add(language);
+        //add(view);
         add(Box.createHorizontalGlue());
         add(help);
     }
