@@ -29,7 +29,7 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = -3647121287061933797L;
 
-    private TabShell tabShell;
+	private TabShell tabShell;
 	
 	private Timer updateTimer;
 	
@@ -51,13 +51,14 @@ public class MainWindow extends JFrame {
 	}
 	
 	public MainWindow() {
-		this(new Document());
+		this(new Document(), false);
 	}
 
-	public MainWindow(Document document) {
+	public MainWindow(Document document, boolean changedSinceSave) {
 
-        tabShell = new TabShell(this, document);
-        getActivePanel().updateTitle();
+		tabShell = new TabShell(this, document);
+		getActivePanel().updateTitle();
+		getActivePanel().documentChangedSinceSave = changedSinceSave;
 
 		createInterface();
 		
@@ -143,6 +144,15 @@ public class MainWindow extends JFrame {
 			return false;
 		}
 	}
+	
+	boolean doSaveAll() {
+		// TODO: Save other tabs.
+		return doSave();
+	}
+	
+	boolean hasUnsavedChanges() {
+		return getActivePanel().documentChangedSinceSave;
+	}
 
 	private void createInterface() {
 		setLayout(new BorderLayout());
@@ -161,7 +171,25 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				close();
+				if (hasUnsavedChanges()) {
+					switch (JOptionPane.showConfirmDialog(null, "Would you like to save them before closing?", "Unsaved Changes", JOptionPane.YES_NO_CANCEL_OPTION)) {
+					case JOptionPane.YES_OPTION:
+						if (doSaveAll()) {
+							close();
+						}
+						break;
+					
+					case JOptionPane.CANCEL_OPTION:
+						/* No action (not closing). */
+						break;
+					
+					case JOptionPane.NO_OPTION:
+					default:
+						close();
+					}
+				} else {
+					close();
+				}
 			}
 
 			@Override

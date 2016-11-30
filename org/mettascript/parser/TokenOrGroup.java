@@ -97,6 +97,7 @@ public class TokenOrGroup {
                             break;
                         case "+":
                         case "-":
+                        case "~":
                             nClose = nOpen = 4;
                             break;
                         case "!":

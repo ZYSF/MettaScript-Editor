@@ -34,6 +34,42 @@ public class BytecodeFile extends AbstractBytecodeObject {
 	private long totalDataLength = -1;
 
 	public BytecodeFile(FormulaParser parser) throws CompilationException {
+		/* XXX Temporary: Add standard operators at known indices. */
+		/* This isn't enabled yet (it gets garbled anyway).
+		getOperator("@");			// 0
+		getOperator("+");
+		getOperator("-");
+		getOperator("*");
+		getOperator("/");
+		getOperator("~");			// 5
+		getOperator("=");
+		getOperator("<>");
+		getOperator("<");
+		getOperator("<=");
+		getOperator(">");			// 10
+		getOperator(">=");
+		getOperator("^");
+		getOperator("shiftLeft");
+		getOperator("rotateLeft");
+		getOperator("shiftRight");		// 15
+		getOperator("extendRight");
+		getOperator("rotateRight");
+		getOperator("andBits");
+		getOperator("orBits");
+		getOperator("opposite");		// 20
+		getOperator("unicodeAtIndex");
+		getOperator("unicodeIndexFollowing");
+		getOperator("asText");
+		getOperator("unicodeAsText");
+		getOperator("count");			// 25
+		getOperator("unicodeCount");
+		getOperator("unused27");
+		getOperator("unused28");
+		getOperator("unused29");
+		getOperator("unused30");		// 30
+		getOperator("unused31");
+		*/
+		
 		new Block(this, parser);
 	}
 

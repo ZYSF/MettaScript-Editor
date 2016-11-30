@@ -54,6 +54,7 @@ public class TabShell extends JPanel {
 
         @Override
         public void setTitle(String title) {
+            System.out.println("Setting tab title to '" + title + "'...");
             super.setTitle(title);
             if (tabShell != null) {
                 tabShell.updateTitle(this);
@@ -82,7 +83,11 @@ public class TabShell extends JPanel {
         if (documentPane == null && singleTab != null && singleTab.getId().equals(tab.getId())) {
             mainWindow.setTitle(Main.APP_NAME + " - " + singleTab.getTitle());
         } else if (documentPane != null) {
-            /* TODO... */
+            // TODO: Why doesn't this work? Why are Swing/WebLAF tabs so damn broken?
+            documentPane.getPane(tab).getTabbedPane().setTabComponentAt(documentPane.getPane(tab).indexOf(tab), new JLabel(tab.getTitle()));
+            if (tab == getSelectedDocument()) {
+            	mainWindow.setTitle(Main.APP_NAME + " - " + tab.getTitle() + " (multiple tabs)");
+            }
         }
     }
 

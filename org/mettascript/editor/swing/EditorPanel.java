@@ -87,6 +87,7 @@ public class EditorPanel extends JPanel {
         textPane = new RSyntaxTextArea();
         textPane.setEditable(true);
         textPane.setDocument(new RSyntaxDocument(new MettaTokenMakerFactory(), "text/mettascript"));
+        textPane.setText(getDocument().getSource());
         textPane.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -106,8 +107,8 @@ public class EditorPanel extends JPanel {
                 updateTitle();
             }
         });
-        textPane.setText(getDocument().getSource());
         textPane.setBorder(BorderFactory.createEmptyBorder());
+        updateTitle();
     }
 
     private void createOutputPanel() {
