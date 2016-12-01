@@ -115,7 +115,6 @@ public class AboutDialog extends JDialog {
 			text += "Language/Compiler/Runtime Bugs & Limitations:\n";
 			text += " * There is only support for arbitrary-precision integers at\n";
 			text += "   the moment. A full number stack is coming.\n";
-			text += " * While texts (strings) are supported, support is not great.\n";
 			text += " * There is no support for quantity calculus (dealing\n";
 			text += "   with units of measurement) at this stage. It will be\n";
 			text += "   implemented as context-based replacement of unknown\n";
@@ -127,6 +126,7 @@ public class AboutDialog extends JDialog {
 			text += "   in mind.\n";
 			text += " * The only fully supported backend at this stage is bytecode\n";
 			text += "   which is interpreted by a virtual machine written in Java.\n";
+			text += "   (An optimised C-based VM is in development.)\n";
 			text += " * The Java-based interpreter is not well optimised.\n";
 			text += " * The interpreter will kill the program after a certain number\n";
 			text += "   of steps (the number is set in the Context object). This is to\n";
@@ -143,13 +143,11 @@ public class AboutDialog extends JDialog {
 			text += "   know what it does and therefore how to fix it.\n";
 			text += "\n";
 			text += "User Interface/Editor Bugs & Limitations:\n";
-			text += " * There is a need for either tabs or a directory tree.\n";
+			text += " * There are still some issues with tabs & unsaved warnings.\n";
 			text += " * If you close the editor without saving first, game over.\n";
 			text += " * If you keep showing and hiding either the console or the\n";
 			text += "   side-view, the position of the divider will drift slowly\n";
 			text += "   towards the top or the left of the window.\n";
-			text += " * There are no standard Edit menu items (undo, paste), but\n";
-			text += "   the conventional keyboard shortcuts work.\n";
 			text += " * There is no search feature. I'll do it when I decide on a UI.\n";
 			text += " * The UI as a whole needs to be shifted around a little.\n";
 			text += " * Text such as this needs better formatting.\n";

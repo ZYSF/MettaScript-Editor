@@ -141,7 +141,7 @@ public class BytecodeFile extends AbstractBytecodeObject {
 		for (TextConstant tc: texts.values()) {
 			tc.index = constantsByIndex.size();
 			constantsByIndex.add(tc);
-			totalDataLength += tc.getValueString().getBytes().length;
+			totalDataLength += tc.getString().getBytes().length;
 		}
 		
 		operatorsByIndex = new ArrayList<OperatorReference>();
@@ -388,7 +388,7 @@ public class BytecodeFile extends AbstractBytecodeObject {
 		for (Constant c: constantsByIndex) {
 			if (c instanceof TextConstant) {
 				TextConstant tc = (TextConstant)c;
-				byte[] value = tc.getValueString().getBytes();
+				byte[] value = tc.getString().getBytes();
 				write8(out, 1);
 				write8(out, 0);		// Reserved for future use
 				write16(out, value.length);
