@@ -350,7 +350,7 @@ public class BytecodeFile extends AbstractBytecodeObject {
 		
 		long size = 0; // HEADER_SIZE not included, the header may be removed
 		size += 12; // Number of bytes used in the index headers
-		size += 8 * unknownFactors.size();
+		size += 4 * unknownFactors.size();
 		size += 12 * blocks.size();
 		size += 8 * constantsByIndex.size();
 		size += 8 * operators.size();

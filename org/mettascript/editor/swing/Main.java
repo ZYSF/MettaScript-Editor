@@ -15,7 +15,7 @@ public class Main {
 	
 	public static final String APP_NAME = "MettaScript Editor";
 	public static final String APP_NAME_SHORT = "MSE";
-	public static final String APP_VERSION = "0.0.2-alpha";
+	public static final String APP_VERSION = "0.0.3-alpha";
 
 	public static void main (String[] args) {
 		SwingUtilities.invokeLater(new Runnable(){
