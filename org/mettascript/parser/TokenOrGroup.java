@@ -91,6 +91,11 @@ public class TokenOrGroup {
                     break;
                 case OPERATOR:
                     switch (token.toString()) {
+						case ".":
+						case "!":
+						case "?":
+							nClose = nOpen = 1;
+							break;
                         case "*":
                         case "/":
                             nClose = nOpen = 3;
@@ -100,9 +105,11 @@ public class TokenOrGroup {
                         case "~":
                             nClose = nOpen = 4;
                             break;
+                        /* TODO: Not operator?
                         case "!":
                             nClose = nOpen = 5;
                             break;
+                         */
                         case "==":
                         case ">":
                         case ">=":

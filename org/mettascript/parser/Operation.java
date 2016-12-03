@@ -128,7 +128,7 @@ public class Operation {
     }
     
     public boolean isSpecialOperation() {
-        return isOperation("[", "{", "&", "|", "=", ",", ";", ".", "..", "...") && !isNormalEquals();
+        return isOperation("[", "{", "&", "|", "=", ",", ";", ".", "!", "?") && !isNormalEquals();
     }
     
     public boolean isBlock() {
@@ -189,10 +189,6 @@ public class Operation {
     
     public boolean isQuestionMark() {
         return isOperation("?");
-    }
-    
-    public boolean isDotDot() {
-        return isOperation("..");
     }
     
     public int getCommaMemberCount() {
