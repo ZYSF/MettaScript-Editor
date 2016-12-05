@@ -97,7 +97,13 @@ public class Block extends ConstantLike {
 					insert(new PutInstruction(name.operator));
 				}
 			} else {
-				/* The member is assumed to be commentary. */
+				/* If it's not an equals operation and it's not the last
+				 * operation in the block body, then the resulting
+				 * values are still calculated, but are discarded
+				 * afterwards.
+				 */
+				int numberOfDiscardedValues = compileOperation(member);
+				insert(new PopInstruction(numberOfDiscardedValues));
 			}
 			
 			thisMember++;
@@ -138,7 +144,12 @@ public class Block extends ConstantLike {
 		if (operation.isNothing()) {
 			return 0;
 		} else if (operation.isConstantNumber()) {
-			BigInteger value = new BigInteger(operation.token.toString());
+			BigInteger value;
+			try {
+				value = new BigInteger(operation.token.toString());
+			} catch (NumberFormatException nfe) {
+				throw new CompilationException(operation, "Number format issue (NOTE: Decimal points and scientific notation are not supported yet!).");
+			}
 			if (PushIntegerInstruction.isWithinBounds(value)) {
 				insert(new PushIntegerInstruction(value.intValue()));
 			} else {
