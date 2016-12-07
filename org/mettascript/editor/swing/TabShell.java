@@ -6,9 +6,10 @@ package org.mettascript.editor.swing;
 
 import com.alee.extended.tab.*;
 import org.mettascript.editor.Document;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TabShell extends JPanel {
     private MainWindow mainWindow;
@@ -23,7 +24,16 @@ public class TabShell extends JPanel {
 
         @Override
         public boolean closing(Tab tab, PaneData<Tab> paneData, int i) {
-            return true;
+			if (((EditorPanel) tab.getComponent()).documentChangedSinceSave) {
+				switch (JOptionPane.showConfirmDialog(null, "This file has unsaved changes. Do you really want to close this tab?", "Unsaved Changes", JOptionPane.YES_NO_OPTION)) {
+				case JOptionPane.YES_OPTION:
+					return true;
+				default:
+					return false;
+				}
+			} else {
+				return true;
+			}
         }
 
         @Override
@@ -184,4 +194,14 @@ public class TabShell extends JPanel {
             return documentPane.getSelectedDocument();
         }
     }
+    
+    public List<Tab> getDocuments() {
+		if (documentPane == null) {
+			ArrayList<Tab> l = new ArrayList<Tab>();
+			l.add(singleTab);
+			return l;
+		} else {
+			return documentPane.getDocuments();
+		}
+	}
 }

@@ -7,6 +7,8 @@ package org.mettascript.editor.swing;
 import org.mettascript.editor.Document;
 
 import javax.swing.*;
+import javax.swing.event.MenuListener;
+import javax.swing.event.MenuEvent;
 import javax.swing.text.DefaultEditorKit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +25,7 @@ public class MenuBar extends JMenuBar {
     }
 
     private void createMenus() {
-        JMenu formula = new JMenu("_Formula");
+        JMenu formula = new JMenu("Formula");
         formula.setMnemonic('f');
         JMenuItem formulaNew = new JMenuItem("New");
         formulaNew.setMnemonic('n');
@@ -38,7 +40,7 @@ public class MenuBar extends JMenuBar {
             }
         });
         formula.add(formulaNew);
-        JMenuItem formulaOpen = new JMenuItem("Open");
+        JMenuItem formulaOpen = new JMenuItem("Open...");
         formulaOpen.setMnemonic('o');
         formulaOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         formulaOpen.addActionListener(new ActionListener() {
@@ -48,7 +50,35 @@ public class MenuBar extends JMenuBar {
             }
         });
         formula.add(formulaOpen);
+        JMenu  formulaOpenRecent = new JMenu("Open Recent");
+        formulaOpenRecent.setMnemonic('r');
+        formulaOpenRecent.addMenuListener(new MenuListener(){
+			public void menuCanceled(MenuEvent e) {}
+			public void menuDeselected(MenuEvent e) {}
+			public void menuSelected(MenuEvent e) {
+				JMenu menu = (JMenu) e.getSource();
+				menu.removeAll();
+				
+				String[] recentFiles = mainWindow.getRecentFiles();
+				for (int i = 0; i < recentFiles.length; i++) {
+					String f = recentFiles[i];
+					if (f != null && !f.equals("")) {
+						JMenuItem mi = new JMenuItem(f);
+						mi.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								mainWindow.doOpen(f);
+							}
+						});
+						menu.add(mi);
+					}
+				}
+			}
+		});
+		formula.add(formulaOpenRecent);
+        
         formula.addSeparator();
+        
         JMenuItem formulaSave = new JMenuItem("Save");
         formulaSave.setMnemonic('s');
         formulaSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
@@ -70,18 +100,43 @@ public class MenuBar extends JMenuBar {
 
         });
         formula.add(formulaSaveAs);
+        
         formula.addSeparator();
-        JMenuItem formulaQuickBuild = new JMenuItem("Quick Build (-> .mbc)");
-        formulaQuickBuild.setMnemonic('q');
-        formulaQuickBuild.addActionListener(new ActionListener() {
+        
+        JMenuItem formulaBuildBytecode = new JMenuItem("Build Bytecode (-> .mbc)");
+        formulaBuildBytecode.setMnemonic('b');
+        formulaBuildBytecode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK));
+        formulaBuildBytecode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainWindow.doQuickBuild();
+                mainWindow.doBuildBytecode();
             }
 
         });
-        formula.add(formulaQuickBuild);
+        formula.add(formulaBuildBytecode);
+        
+        JMenuItem formulaBuildJSON = new JMenuItem("Build JSON (-> .mbc.json)");
+        formulaBuildJSON.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.doBuildJSON();
+            }
+
+        });
+        formula.add(formulaBuildJSON);
+        
+        JMenuItem formulaBuildCSV = new JMenuItem("Build CSV (-> .mbc.csv)");
+        formulaBuildCSV.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.doBuildCSV();
+            }
+
+        });
+        formula.add(formulaBuildCSV);
+        
         formula.addSeparator();
+        
         JMenuItem formulaClose = new JMenuItem("Close Window");
         formulaClose.setMnemonic('c');
         formulaClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
@@ -94,16 +149,19 @@ public class MenuBar extends JMenuBar {
         });
         formula.add(formulaClose);
 
-        JMenu edit = new JMenu("_Edit");
+        JMenu edit = new JMenu("Edit");
         
         JMenuItem editCut = new JMenuItem(new DefaultEditorKit.CutAction());
         editCut.setText("Cut");
+        editCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
         edit.add(editCut);
         JMenuItem editCopy = new JMenuItem(new DefaultEditorKit.CopyAction());
         editCopy.setText("Copy");
+        editCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         edit.add(editCopy);
         JMenuItem editPaste = new JMenuItem(new DefaultEditorKit.PasteAction());
         editPaste.setText("Paste");
+        editPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
         edit.add(editPaste);
 
 		/*
@@ -123,7 +181,7 @@ public class MenuBar extends JMenuBar {
 		viewLookAndFeelJava.add(createLookAndFeelMenuItem("CDE/Motif", "com.sun.java.swing.plaf.motif.MotifLookAndFeel", false));
 		viewLookAndFeelJava.add(createLookAndFeelMenuItem("GTK+", "com.sun.java.swing.plaf.gtk.GTKLookAndFeel", false));
 		*/
-        JMenu help = new JMenu("_Help");
+        JMenu help = new JMenu("Help");
         help.setMnemonic('h');
         JMenuItem helpFeedback = new JMenuItem("Feedback");
         helpFeedback.setMnemonic('f');

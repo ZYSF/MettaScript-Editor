@@ -63,7 +63,7 @@ public class EditorPanel extends JPanel {
     private OutputPanel outputPanel;
 
     private WebStatusBar controlPanel;
-    private boolean calculateOnEdit = true;
+    private boolean calculateOnEdit = false;
     private boolean awaitingExplicitCalculation = false;
 
     private WebProgressOverlay calculationProgressOverlay;
@@ -256,7 +256,7 @@ public class EditorPanel extends JPanel {
     private void createLayoutComponents() {
         outerSplitPane = new JSplitPane();
         outerSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        outerSplitPane.setResizeWeight(0.25);
+        outerSplitPane.setResizeWeight(0.75);
         innerSplitPane = new JSplitPane();
         innerSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         innerDividerSize = innerSplitPane.getDividerSize();
